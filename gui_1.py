@@ -89,8 +89,9 @@ new_button.bind("<Button-1>", lambda event: menu.post(new_button.winfo_rootx(), 
 
 #---------------------------
 
-
-about_button = tk.Button(toolbox, text="Acerca de", font=("Arial", 12, "bold"), fg="blue")
+def about_us():
+    messagebox.showinfo("Software CABA", "Este software fue creado por estudiantes de la UPC para el proyecto CABA. \nSe espera seguir desarrollando el proyecto para que presente mayor número de funciones y caracteristicas. Así como tambien resolver errores, lograr la optimizacion y la adhesion de nuestra red neuronal (en proceso) completamente funcional. \nVersión: 0.1.0 \nFecha: 16/11/2020 \nAutor: Factible Data \nContacto: factiblesoftwarecaba@gmail.com")
+about_button = tk.Button(toolbox, text="Acerca de", font=("Arial", 12, "bold"), fg="blue", command=about_us)
 about_button.pack(side="left")
 
 # Crear un botón que redirige a tu perfil de GitHub
