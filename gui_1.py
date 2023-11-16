@@ -185,8 +185,15 @@ def load_image_gallery(category):
         image_list.append(photo2)
 
         button1 = tk.Button(frame, image=photo1)
+        button1.bind("<Enter>", lambda event: show_info(event, "ISIC_0024306.jpg", "Fecha1", "Paciente1"))
+        button1.bind("<Leave>", hide_info)
+        button1.bind("<Button-1>", lambda event: show_metadata(event, "ISIC_0024306.jpg", photo1))
         button1.pack(side="left")
+
         button2 = tk.Button(frame, image=photo2)
+        button2.bind("<Enter>", lambda event: show_info(event, "ISIC_0024307.jpg", "Fecha2", "Paciente2"))
+        button2.bind("<Leave>", hide_info)
+        button2.bind("<Button-1>", lambda event: show_metadata(event, "ISIC_0024307.jpg", photo2))
         button2.pack(side="left")
 
     elif category == "Categoría 2":
