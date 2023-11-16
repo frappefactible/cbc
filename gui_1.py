@@ -12,10 +12,11 @@ from email.mime.text import MIMEText
 from email.mime.image import MIMEImage
 import requests
 import tkinter as tk
+from tkinter import simpledialog
 
 # Crear la ventana principal
 root = tk.Tk()
-root.title("CABA")
+root.title("CABA v0.1.0")
 
 #---------------------------------
 # Crear un Canvas y un Scrollbar
@@ -100,21 +101,40 @@ github_button.pack(side="left")
 #---------------------------
 # Nueva función y botón... agregando correo
 
-def send_email():
+def open_email_window():
+    email_window = tk.Toplevel()
+    email_window.title("CABA: Enviar correo")
+    email_window.geometry("300x170")  # Ajusta el tamaño de la ventana a 300px de ancho y 170px de alto
+
+    tk.Label(email_window, text="Introduce tu nombre:", font=("Arial", 14)).pack()
+    name_entry = tk.Entry(email_window, font=("Arial", 14))
+    name_entry.pack()
+
+    tk.Label(email_window, text="Introduce tu correo electrónico:", font=("Arial", 14)).pack()
+    email_entry = tk.Entry(email_window, font=("Arial", 14))
+    email_entry.pack()
+
+    send_button = tk.Button(email_window, text="Enviar", font=("Arial", 14), command=lambda: send_email(email_entry.get(), name_entry.get()))
+    send_button.pack(pady=15)  # Agrega un espacio de separación de 10px arriba y abajo del botón
+
+def send_email(receiver_email, user_name):
     smtp_server = "smtp.gmail.com"
     smtp_port = 587
     sender_email = "factiblesoftwarecaba@gmail.com"
     sender_password = "mogjhuwgbeqbwcef"
-    receiver_email = "justicephantombass@gmail.com"
+    #receiver_email = "justicephantombass@gmail.com"
     #"diro581220@gmail.com"
 
     msg = MIMEMultipart()
     msg['From'] = sender_email
     msg['To'] = receiver_email
-    msg['Subject'] = "Correo de prueba del software CABA"
+    msg['Subject'] = "Correo de bienvenida al software CABA"
 
-    body = "Si puede leer este correo es porque usted es Asombroso!"
+    body = f"¡Hola {user_name}! \n[Si puedes leer este correo es porque eres asombroso!] \nBienvenido al software CABA, \nAgradecemos tu confianza en Factible Data y esperamos poder ofrecerte soluciones innovadoras y confiables."
     msg.attach(MIMEText(body, 'plain'))
+
+    # Muestra un cuadro de diálogo de información después de enviar el correo electrónico
+    messagebox.showinfo("Información", "Correo enviado")
 
     # Descargar y adjuntar la imagen
     image_url = "https://64.media.tumblr.com/d176ee10668fd22bf6189cb59d57a3a2/505d6502a1cbfe5e-39/s1280x1920/1c92bb401e01841e23157b5204c6817b53f860e3.gifv"
@@ -135,19 +155,56 @@ def send_email():
     server.sendmail(sender_email, receiver_email, text)
     server.quit()
 
-email_button = tk.Button(toolbox, text="Enviar correo", font=("Arial", 12, "bold"), fg="red", command=send_email)
+
+email_button = tk.Button(toolbox, text="Enviar correo", font=("Arial", 12, "bold"), fg="red", command=open_email_window)
 email_button.pack(side="left")
+#email_button = tk.Button(toolbox, text="Enviar correo", font=("Arial", 12, "bold"), fg="red", command=send_email)
+#email_button.pack(side="left")
 
 #---------------------------
 
 
 #-------------------------
 
-# Crear las imágenes
-image1 = Image.open("ISIC_0024306.jpeg")
-image2 = Image.open("ISIC_0024307.jpeg")
-image3 = Image.open("ISIC_0024308.jpeg")
-image4 = Image.open("ISIC_0024309.jpeg")
+# Pendiente 16/11/2023
+# Crear una lista para almacenar las imágenes
+image_list = []
+
+def load_image_gallery(category):
+    # Asegúrate de eliminar cualquier imagen anterior de la lista
+    image_list.clear()
+    if category == "Categoría 1":
+        image1 = Image.open("ISIC_0024306.jpg")
+        image2 = Image.open("ISIC_0024307.jpg")
+
+        photo1 = ImageTk.PhotoImage(image1)
+        photo2 = ImageTk.PhotoImage(image2)
+
+        # Guardar las imágenes en la lista
+        image_list.append(photo1)
+        image_list.append(photo2)
+
+        button1 = tk.Button(frame, image=photo1)
+        button1.pack(side="left")
+        button2 = tk.Button(frame, image=photo2)
+        button2.pack(side="left")
+
+    elif category == "Categoría 2":
+        image3 = Image.open("ISIC_0024308.jpg")
+        image4 = Image.open("ISIC_0024309.jpg")
+    # Agrega más condiciones elif aquí para las otras categorías
+
+categories = ["Categoría 1", "Categoría 2", "Categoría 3", "Categoría 4"]
+
+for category in categories:
+    button = tk.Button(frame, text=category, command=lambda category=category: load_image_gallery(category))
+    button.pack(side="left")
+
+# Crear las imágenes 
+image1 = Image.open("ISIC_0024306.jpg")
+image2 = Image.open("ISIC_0024307.jpg")
+image3 = Image.open("ISIC_0024308.jpg")
+image4 = Image.open("ISIC_0024309.jpg")
 
 # Crear los objetos ImageTk
 photo1 = ImageTk.PhotoImage(image1)
@@ -199,21 +256,21 @@ def show_metadata(event, image_path, photo):
 
 # Crear los botones y asignarles las imágenes
 button1 = tk.Button(frame, image=photo1)
-button1.bind("<Enter>", lambda event: show_info(event, "ISIC_0024306.jpeg", "Fecha1", "Paciente1"))
+button1.bind("<Enter>", lambda event: show_info(event, "ISIC_0024306.jpg", "Fecha1", "Paciente1"))
 button1.bind("<Leave>", hide_info)
-button1.bind("<Button-1>", lambda event: show_metadata(event, "ISIC_0024306.jpeg", photo1))
+button1.bind("<Button-1>", lambda event: show_metadata(event, "ISIC_0024306.jpg", photo1))
 button2 = tk.Button(frame, image=photo2)
-button2.bind("<Enter>", lambda event: show_info(event, "ISIC_0024307.jpeg", "Fecha2", "Paciente2"))
+button2.bind("<Enter>", lambda event: show_info(event, "ISIC_0024307.jpg", "Fecha2", "Paciente2"))
 button2.bind("<Leave>", hide_info)
-button2.bind("<Button-1>", lambda event: show_metadata(event, "ISIC_0024307.jpeg", photo2))
+button2.bind("<Button-1>", lambda event: show_metadata(event, "ISIC_0024307.jpg", photo2))
 button3 = tk.Button(frame, image=photo3)
-button3.bind("<Enter>", lambda event: show_info(event, "ISIC_0024308.jpeg", "Fecha3", "Paciente3"))
+button3.bind("<Enter>", lambda event: show_info(event, "ISIC_0024308.jpg", "Fecha3", "Paciente3"))
 button3.bind("<Leave>", hide_info)
-button3.bind("<Button-1>", lambda event: show_metadata(event, "ISIC_0024308.jpeg", photo3))
+button3.bind("<Button-1>", lambda event: show_metadata(event, "ISIC_0024308.jpg", photo3))
 button4 = tk.Button(frame, image=photo4)
-button4.bind("<Enter>", lambda event: show_info(event, "ISIC_0024309.jpeg", "Fecha4", "Paciente4"))
+button4.bind("<Enter>", lambda event: show_info(event, "ISIC_0024309.jpg", "Fecha4", "Paciente4"))
 button4.bind("<Leave>", hide_info)
-button4.bind("<Button-1>", lambda event: show_metadata(event, "ISIC_0024309.jpeg", photo4))
+button4.bind("<Button-1>", lambda event: show_metadata(event, "ISIC_0024309.jpg", photo4))
 
 # Crear los botones y asignarles las imágenes
 #button1 = tk.Button(root, image=photo1)
