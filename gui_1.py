@@ -73,6 +73,8 @@ def open_settings():
 def exit_app():
     root.quit()
 
+
+
 # Crear el menú desplegable
 menu = Menu(root, tearoff=0)
 menu.add_command(label="Subir archivo", command=upload_file)
@@ -82,7 +84,8 @@ menu.add_command(label="Configuración", command=open_settings)
 menu.add_command(label="Salir", command=exit_app)
 
 # Asociar el menú desplegable con el botón "Nuevo"
-new_button.bind("<Button-1>", lambda event: menu.post(event.x_root, event.y_root))
+new_button.bind("<Button-1>", lambda event: menu.post(new_button.winfo_rootx(), new_button.winfo_rooty() + new_button.winfo_height()))
+#event.x_root, event.y_root
 
 #---------------------------
 
@@ -181,9 +184,10 @@ image_frame.pack(fill="both", expand=True)
 def load_image_gallery(category):
     # Asegúrate de eliminar cualquier imagen anterior de la lista
     image_list.clear()
-    # Asegúrate de eliminar cualquier imagen anterior del frame de las imágenes
+    # Eliminar cualquier imagen anterior del frame de las imágenes
     for widget in image_frame.winfo_children():
-        widget.destroy()
+        if isinstance(widget, tk.Button):
+            widget.destroy()
     if category == "Categoría 1":
         image1 = Image.open("ISIC_0024306.jpg")
         image2 = Image.open("ISIC_0024307.jpg")
@@ -195,13 +199,13 @@ def load_image_gallery(category):
         image_list.append(photo1)
         image_list.append(photo2)
 
-        button1 = tk.Button(frame, image=photo1)
+        button1 = tk.Button(image_frame, image=photo1)
         button1.bind("<Enter>", lambda event: show_info(event, "ISIC_0024306.jpg", "Fecha1", "Paciente1"))
         button1.bind("<Leave>", hide_info)
         button1.bind("<Button-1>", lambda event: show_metadata(event, "ISIC_0024306.jpg", photo1))
         button1.pack(side="left")
 
-        button2 = tk.Button(frame, image=photo2)
+        button2 = tk.Button(image_frame, image=photo2)
         button2.bind("<Enter>", lambda event: show_info(event, "ISIC_0024307.jpg", "Fecha2", "Paciente2"))
         button2.bind("<Leave>", hide_info)
         button2.bind("<Button-1>", lambda event: show_metadata(event, "ISIC_0024307.jpg", photo2))
@@ -210,7 +214,34 @@ def load_image_gallery(category):
     elif category == "Categoría 2":
         image3 = Image.open("ISIC_0024308.jpg")
         image4 = Image.open("ISIC_0024309.jpg")
-    # Agrega más condiciones elif aquí para las otras categorías
+        image5 = Image.open("F8ew2v5WQAARCWc.png")
+
+        photo3 = ImageTk.PhotoImage(image3)
+        photo4 = ImageTk.PhotoImage(image4)
+        photo5 = ImageTk.PhotoImage(image5)
+
+        # Guardar las imágenes en la lista
+        image_list.append(photo3)
+        image_list.append(photo4)
+        image_list.append(photo5)
+
+        button3 = tk.Button(image_frame, image=photo3)
+        button3.bind("<Enter>", lambda event: show_info(event, "ISIC_0024308.jpg", "Fecha3", "Paciente3"))
+        button3.bind("<Leave>", hide_info)
+        button3.bind("<Button-1>", lambda event: show_metadata(event, "ISIC_0024308.jpg", photo3))
+        button3.pack(side="left")
+
+        button4 = tk.Button(image_frame, image=photo4)
+        button4.bind("<Enter>", lambda event: show_info(event, "ISIC_0024309.jpg", "Fecha4", "Paciente4"))
+        button4.bind("<Leave>", hide_info)
+        button4.bind("<Button-1>", lambda event: show_metadata(event, "ISIC_0024309.jpg", photo4))
+        button4.pack(side="left")
+
+        button5 = tk.Button(image_frame, image=photo5)
+        button5.bind("<Enter>", lambda event: show_info(event, "F8ew2v5WQAARCWc.png", "Fecha5", "Paciente5"))
+        button5.bind("<Leave>", hide_info)
+        button5.bind("<Button-1>", lambda event: show_metadata(event, "F8ew2v5WQAARCWc.png", photo5))
+        button5.pack(side="left")
 
 categories = ["Categoría 1", "Categoría 2", "Categoría 3", "Categoría 4"]
 
