@@ -4,7 +4,14 @@ import os
 import time
 from tkinter import messagebox #para crear una ventana nueva
 from tkinter import ttk
+from tkinter import filedialog, Menu, messagebox
 import webbrowser
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
+import requests
+import tkinter as tk
 
 # Crear la ventana principal
 root = tk.Tk()
@@ -42,18 +49,97 @@ toolbox = tk.Frame(root)
 toolbox.pack(side="top", anchor="nw")
 
 # Crear los botones de la caja de herramientas
-new_button = tk.Button(toolbox, text="Nuevo")
+new_button = tk.Button(toolbox, text="Nuevo", font=("Arial", 12, "bold"), fg="green")
 new_button.pack(side="left")
 
-about_button = tk.Button(toolbox, text="Acerca de")
+
+# Definir las funciones para cada opción del menú
+def upload_file():
+    filename = filedialog.askopenfilename()
+    # Aquí puedes añadir el código para manejar el archivo
+
+def import_file():
+    filename = filedialog.askopenfilename()
+    # Aquí puedes añadir el código para importar el archivo
+
+def export_file():
+    filename = filedialog.asksaveasfilename()
+    # Aquí puedes añadir el código para exportar el archivo
+
+def open_settings():
+    messagebox.showinfo("Configuración", "Aquí puedes abrir la ventana de configuración")
+
+def exit_app():
+    root.quit()
+
+# Crear el menú desplegable
+menu = Menu(root, tearoff=0)
+menu.add_command(label="Subir archivo", command=upload_file)
+menu.add_command(label="Importar", command=import_file)
+menu.add_command(label="Exportar", command=export_file)
+menu.add_command(label="Configuración", command=open_settings)
+menu.add_command(label="Salir", command=exit_app)
+
+# Asociar el menú desplegable con el botón "Nuevo"
+new_button.bind("<Button-1>", lambda event: menu.post(event.x_root, event.y_root))
+
+#---------------------------
+
+
+about_button = tk.Button(toolbox, text="Acerca de", font=("Arial", 12, "bold"), fg="blue")
 about_button.pack(side="left")
 
 # Crear un botón que redirige a tu perfil de GitHub
 def open_github():
     webbrowser.open("https://github.com/frappefactible")
 
-github_button = tk.Button(toolbox, text="GitHub", command=open_github)
+github_button = tk.Button(toolbox, text="GitHub", font=("Arial", 12, "bold"), fg="black", command=open_github)
 github_button.pack(side="left")
+
+
+#---------------------------
+# Nueva función y botón... agregando correo
+
+def send_email():
+    smtp_server = "smtp.gmail.com"
+    smtp_port = 587
+    sender_email = "factiblesoftwarecaba@gmail.com"
+    sender_password = "mogjhuwgbeqbwcef"
+    receiver_email = "justicephantombass@gmail.com"
+    #"diro581220@gmail.com"
+
+    msg = MIMEMultipart()
+    msg['From'] = sender_email
+    msg['To'] = receiver_email
+    msg['Subject'] = "Correo de prueba del software CABA"
+
+    body = "Si puede leer este correo es porque usted es Asombroso!"
+    msg.attach(MIMEText(body, 'plain'))
+
+    # Descargar y adjuntar la imagen
+    image_url = "https://64.media.tumblr.com/d176ee10668fd22bf6189cb59d57a3a2/505d6502a1cbfe5e-39/s1280x1920/1c92bb401e01841e23157b5204c6817b53f860e3.gifv"
+    response = requests.get(image_url)
+    img = MIMEImage(response.content)
+    msg.attach(img)
+
+    # Adjuntar la imagen
+    #with open("path_to_your_image.jpg", 'rb') as f:
+    #    img = MIMEImage(f.read())
+    #msg.attach(img)
+
+    server = smtplib.SMTP(smtp_server, smtp_port)
+    server.starttls()
+    server.login(sender_email, sender_password)
+
+    text = msg.as_string()
+    server.sendmail(sender_email, receiver_email, text)
+    server.quit()
+
+email_button = tk.Button(toolbox, text="Send Email", command=send_email)
+email_button.pack(side="left")
+
+#---------------------------
+
 
 #-------------------------
 
