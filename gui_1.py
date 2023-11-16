@@ -170,9 +170,20 @@ email_button.pack(side="left")
 # Crear una lista para almacenar las imágenes
 image_list = []
 
+# Crear un frame para los botones de categoría
+category_frame = tk.Frame(root)
+category_frame.pack(side="top", fill="x")
+
+# Crear un frame para las imágenes
+image_frame = tk.Frame(root)
+image_frame.pack(fill="both", expand=True)
+
 def load_image_gallery(category):
     # Asegúrate de eliminar cualquier imagen anterior de la lista
     image_list.clear()
+    # Asegúrate de eliminar cualquier imagen anterior del frame de las imágenes
+    for widget in image_frame.winfo_children():
+        widget.destroy()
     if category == "Categoría 1":
         image1 = Image.open("ISIC_0024306.jpg")
         image2 = Image.open("ISIC_0024307.jpg")
@@ -204,8 +215,8 @@ def load_image_gallery(category):
 categories = ["Categoría 1", "Categoría 2", "Categoría 3", "Categoría 4"]
 
 for category in categories:
-    button = tk.Button(frame, text=category, command=lambda category=category: load_image_gallery(category))
-    button.pack(side="left")
+    button = tk.Button(category_frame, text=category, font=("Arial", 12, "bold"), fg="brown", command=lambda category=category: load_image_gallery(category))
+    button.pack(side="left",pady=10)
 
 # Crear las imágenes 
 image1 = Image.open("ISIC_0024306.jpg")
@@ -256,42 +267,7 @@ def show_metadata(event, image_path, photo):
     metadata_label = tk.Label(new_window, text=f"Tamaño del archivo: {file_size} bytes\nResolución: {resolution[0]} x {resolution[1]}\nFecha de creación: {creation_date}\n\n - Prueba de algoritmo KNN\nPrecisión: x\nExactitud: x\nRecall: x\nF1 Score: x ")
     metadata_label.pack()
 
-#Creación de ventana pequeña de informacion
-#def show_info(event, name, date, patient):
-#    info = f"Nombre: {name}\nFecha: {date}\nPaciente: {patient}"
-#    messagebox.showinfo("Información", info)
-
-# Crear los botones y asignarles las imágenes
-button1 = tk.Button(frame, image=photo1)
-button1.bind("<Enter>", lambda event: show_info(event, "ISIC_0024306.jpg", "Fecha1", "Paciente1"))
-button1.bind("<Leave>", hide_info)
-button1.bind("<Button-1>", lambda event: show_metadata(event, "ISIC_0024306.jpg", photo1))
-button2 = tk.Button(frame, image=photo2)
-button2.bind("<Enter>", lambda event: show_info(event, "ISIC_0024307.jpg", "Fecha2", "Paciente2"))
-button2.bind("<Leave>", hide_info)
-button2.bind("<Button-1>", lambda event: show_metadata(event, "ISIC_0024307.jpg", photo2))
-button3 = tk.Button(frame, image=photo3)
-button3.bind("<Enter>", lambda event: show_info(event, "ISIC_0024308.jpg", "Fecha3", "Paciente3"))
-button3.bind("<Leave>", hide_info)
-button3.bind("<Button-1>", lambda event: show_metadata(event, "ISIC_0024308.jpg", photo3))
-button4 = tk.Button(frame, image=photo4)
-button4.bind("<Enter>", lambda event: show_info(event, "ISIC_0024309.jpg", "Fecha4", "Paciente4"))
-button4.bind("<Leave>", hide_info)
-button4.bind("<Button-1>", lambda event: show_metadata(event, "ISIC_0024309.jpg", photo4))
-
-# Crear los botones y asignarles las imágenes
-#button1 = tk.Button(root, image=photo1)
-#button1.bind("<Enter>", lambda event: show_info(event, "ISIC_0024306.jpg", "Fecha1", "Paciente1"))
-#button2 = tk.Button(root, image=photo2)
-#button2.bind("<Enter>", lambda event: show_info(event, "ISIC_0024307.jpg", "Fecha2", "Paciente2"))
-#button3 = tk.Button(root, image=photo3)
-#button3.bind("<Enter>", lambda event: show_info(event, "ISIC_0024308.jpg", "Fecha3", "Paciente3"))
-
-# Mostrar los botones en la ventana
-button1.pack(side="left")
-button2.pack(side="left")
-button3.pack(side="left")
-button4.pack(side="left")
+#-------------------------
 
 # Mostrar la ventana y esperar a que el usuario interactúe con ella
 root.mainloop()
