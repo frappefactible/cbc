@@ -135,7 +135,7 @@ def send_email():
     server.sendmail(sender_email, receiver_email, text)
     server.quit()
 
-email_button = tk.Button(toolbox, text="Send Email", command=send_email)
+email_button = tk.Button(toolbox, text="Enviar correo", font=("Arial", 12, "bold"), fg="red", command=send_email)
 email_button.pack(side="left")
 
 #---------------------------
