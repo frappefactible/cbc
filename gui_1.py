@@ -94,6 +94,7 @@ def about_us():
 about_button = tk.Button(toolbox, text="Acerca de", font=("Arial", 12, "bold"), fg="blue", command=about_us)
 about_button.pack(side="left")
 
+
 # Crear un botón que redirige a tu perfil de GitHub
 def open_github():
     webbrowser.open("https://github.com/frappefactible")
@@ -165,8 +166,29 @@ email_button.pack(side="left")
 #email_button = tk.Button(toolbox, text="Enviar correo", font=("Arial", 12, "bold"), fg="red", command=send_email)
 #email_button.pack(side="left")
 
-#---------------------------
 
+#---------------------------
+#Frame para red neuronales
+neural_frame = tk.Frame(root)
+neural_frame.pack(side="top", fill="x")
+#Pestaña hacia pequeña red neuronal utilizando dataset MNIST de scikit-learn
+def open_mnist():
+    # Permitir al usuario seleccionar un archivo
+    file_path = filedialog.askopenfilename(
+        filetypes=[
+            ("Keras files", "*.keras"),
+            ("H5 files", "*.h5")
+        ]
+    )
+
+    # Cargar el archivo seleccionado
+    if file_path:
+        # Aquí puedes cargar el archivo como necesites
+        pass
+
+# Crear el botón
+mnist_button = tk.Button(neural_frame, text="MNIST", font=("Arial", 12, "bold"), fg="black", command=open_mnist)
+mnist_button.pack(side="left") 
 
 #-------------------------
 
