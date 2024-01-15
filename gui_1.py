@@ -134,7 +134,7 @@ def send_email(receiver_email, user_name):
     msg['To'] = receiver_email
     msg['Subject'] = "Correo de bienvenida al software CABA"
 
-    body = f"¡Hola {user_name}! \n[Si puedes leer este correo es porque eres asombroso!] \nBienvenido al software CABA, \nAgradecemos tu confianza en Factible Data y esperamos poder ofrecerte soluciones innovadoras y confiables."
+    body = f"¡Hola, {user_name}! \n[Si puedes leer este correo es porque eres asombroso!] \nBienvenido al software CABA, \nAgradecemos tu confianza en Factible Data y esperamos poder ofrecerte soluciones innovadoras y confiables."
     msg.attach(MIMEText(body, 'plain'))
 
     # Muestra un cuadro de diálogo de información después de enviar el correo electrónico
@@ -159,7 +159,7 @@ def send_email(receiver_email, user_name):
     server.sendmail(sender_email, receiver_email, text)
     server.quit()
 
-
+#Prueba para el registro de correo / Proximamente boletín de noticias
 email_button = tk.Button(toolbox, text="Enviar correo", font=("Arial", 12, "bold"), fg="red", command=open_email_window)
 email_button.pack(side="left")
 #email_button = tk.Button(toolbox, text="Enviar correo", font=("Arial", 12, "bold"), fg="red", command=send_email)
@@ -296,7 +296,7 @@ def show_metadata(event, image_path, photo):
     creation_date = time.ctime(creation_time)
 
     # Crear un label para mostrar los metadatos
-    metadata_label = tk.Label(new_window, text=f"Tamaño del archivo: {file_size} bytes\nResolución: {resolution[0]} x {resolution[1]}\nFecha de creación: {creation_date}\n\n - Prueba de algoritmo KNN\nPrecisión: x\nExactitud: x\nRecall: x\nF1 Score: x ")
+    metadata_label = tk.Label(new_window, text=f"Tamaño del archivo: {file_size} bytes\nResolución: {resolution[0]} x {resolution[1]}\nFecha de creación: {creation_date}\n\n - Prueba de algoritmo KNN\nPrecisión: x\nEntropía: x\nExactitud: x\nRecall: x\nF1 Score: x ")
     metadata_label.pack()
 
 #-------------------------
