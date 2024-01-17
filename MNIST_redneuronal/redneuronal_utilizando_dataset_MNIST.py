@@ -15,12 +15,29 @@ from keras.utils import to_categorical
 
 import matplotlib.pyplot as plt
 import numpy as np
+import tensorflow as tf
+from tensorflow import keras
+import cv2
 
 #
 # Lectura, visualización y pre-procesamiento de los datos
 #
 
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
+
+# Para el contorno
+# Preprocesar los datos
+# ...
+
+# Aplicar el filtro de contorno a las imágenes de entrenamiento
+#X_train_contour = np.array([cv2.Canny(image, 100, 200) for image in x_train])
+
+# Aplicar el filtro de contorno a las imágenes de prueba
+#X_test_contour = np.array([cv2.Canny(image, 100, 200) for image in x_test])
+
+# Crear el modelo
+#modelo = Sequential()
+# ...
 
 # Visualizaremos 16 imágenes aleatorias tomadas del set x_train
 ids_imgs = np.random.randint(0,x_train.shape[0],16)
@@ -57,8 +74,18 @@ Y_test = to_categorical(y_test,nclasses)
 # - Capa de salida: función de activación 'softmax' (clasificación multiclase) y un
 #     total de 10 categorías
 #
-
-np.random.seed(1)		# Para reproducibilidad del entrenamiento
+# Verificar si el archivo del modelo ya existe
+import os
+from keras.models import load_model
+if os.path.exists('modelo_mnist.keras'):
+	# Cargar el modelo existente
+	modelo = tf.keras.models.load_model('modelo_mnist.keras')
+	loss, acc = modelo.evaluate(X_test, Y_test, verbose=2)
+	print('Modelo cargado')
+	print(loss)
+	print(acc)
+else:
+	np.random.seed(1)      # Para reproducibilidad del entrenamiento
 input_dim = X_train.shape[1]
 output_dim = Y_train.shape[1]
 
@@ -79,8 +106,12 @@ num_epochs = 50
 batch_size = 1024
 historia = modelo.fit(X_train, Y_train, epochs=num_epochs, batch_size=batch_size, verbose=2)
 
+# Contorno
+# Usar las imágenes con contorno para entrenar el modelo
+#historia = modelo.fit(X_train_contour, Y_train, epochs=num_epochs, batch_size=batch_size, verbose=2)
+
 # Guardar el modelo
-modelo.save('modelo_mnist.h5')
+modelo.save('modelo_mnist.keras')
 
 #
 # Resultados
@@ -107,6 +138,9 @@ print('Precisión en el set de validación: {:.1f}%'.format(100*puntaje[1]))
 
 # Realizar predicción sobre el set de validación y mostrar algunos ejemplos
 # de la clasificación resultante
+#Contorno
+#Y_pred = modelo.predict(X_test_contour)
+
 Y_pred = modelo.predict(X_test)
 Y_pred_classes = np.argmax(Y_pred,axis=1)
 
