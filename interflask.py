@@ -38,10 +38,15 @@ def upload_predict():
             image_path = os.path.join('temp/', filename)
             image_file.save(image_path)
 
+            # Reabrir el archivo y guardarlo
+            image_file.seek(0)  # Retroceder al inicio del archivo
+            with open(image_path, 'wb') as f:
+                f.write(image_file.read())
+
             # Código para enviar el correo electrónico
             email = request.form['email']
             msg = Message('Hola, aqui tiene los resultados de su predicción', sender='factiblesoftwarecaba@gmail.com', recipients=[email])
-            msg.body = f"La predicción tuvo un <span style='color:green;'>{confidence_percent}%</span> de precisión, detecando asi una clase <span style='color:red;'>{predicted_class}</span> dentro del modelo."
+            msg.body = f"La predicción tuvo un <span style='color:green;'>{confidence_percent}%</span> de precisión, detectando asi una clase <span style='color:red;'>{predicted_class}</span> dentro del modelo."
             msg.html = msg.body  # Set the HTML version of the body message
     
             with app.open_resource(image_path) as fp:
