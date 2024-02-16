@@ -767,12 +767,12 @@
   <div class="container-fluid">
       <div class="loop-container">
         <div class="item display-1" data-linewords="
-          Análisis preciso de imágenes para detección temprana. *
+          Análisis preciso de imágenes para la detección de cáncer de piel. *
           Retroalimentación instantánea para una experiencia personalizada. *" 
         data-direction="-1" data-speed="0.05">
         </div>
         <div class="item display-1" data-linewords="
-          Análisis preciso de imágenes para detección temprana. *
+          Análisis preciso de imágenes para la detección de cáncer de piel. *
           Retroalimentación instantánea para una experiencia personalizada. *" 
         data-direction="-1" data-speed="0.05">
         </div>
@@ -1524,18 +1524,21 @@
                         </p>
 						<div class="mbr-section-btn mt-4">
               <body>
-                <h1>Clasificador de imágenes</h1>
+                  <h1>Clasificador de imágenes</h1>
                   <form method="POST" enctype="multipart/form-data">
-                    <div class="custom-file">
-                    <input type="file" name="image" class="custom-file-input" id="customFile" style="display: none;">
-                    <label for="customFile" class="btn btn-primary display-7">Subir imágen</label>
-                    </div>
-                    <input type="submit" value="Iniciar detección" class="btn btn-primary display-7">
+                      <div class="custom-file">
+                          <input type="file" name="image" class="custom-file-input" id="customFile" style="display: none;" required>
+                          <label for="customFile" class="btn btn-primary display-7">Subir imágen</label>
+                      </div>
+                      <div class="form-group">
+                          <input type="email" name="email" placeholder="Correo" data-form-field="email" class="form-control" value="" id="email-form02-0" required>
+                      </div>
+                      <input type="submit" value="Iniciar detección" class="btn btn-primary display-7">
                   </form>
-                    {% if prediction is not none %}
-                    <h2>Clase: {{ prediction }}</h2>
-                    <h2>Precisión: {{ confidence }}%</h2>
-                    {% endif %}
+                  {% if prediction is not none %}
+                  <h2>Clase: {{ prediction }}</h2>
+                  <h2>Precisión: {{ confidence }}%</h2>
+                  {% endif %}
               </body>
             </div>
 					</div>
@@ -1920,7 +1923,7 @@
 							<strong><a class="text-black fw-bold" href="#">Historias Inspiradoras</a></strong>
 						</h6>
 						<p class="mbr-text mbr-fonts-style mb-3 display-7">Ayer</p>
-						<p class="mbr-text mbr-fonts-style mb-3 display-7">Conoce a María, cuya detección temprana salvó su vida. ¡Inspírate con su historia!</p>
+						<p class="mbr-text mbr-fonts-style mb-3 display-7">Conoce a María, cuya detección salvó su vida. ¡Inspírate con su historia!</p>
 						<div class="mbr-section-btn item-footer"><a href="#" class="btn item-btn btn-primary display-7">Leer</a></div>
 					</div>
 				</div>
