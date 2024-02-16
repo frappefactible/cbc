@@ -318,7 +318,7 @@ def show_metadata(event, image_path, photo):
     creation_date = time.ctime(creation_time)
 
     # Crear un label para mostrar los metadatos
-    metadata_label = tk.Label(new_window, text=f"Tamaño del archivo: {file_size} bytes\nResolución: {resolution[0]} x {resolution[1]}\nFecha de creación: {creation_date}\n\n - Prueba de algoritmo KNN\nPrecisión: x\nEntropía: x\nExactitud: x\nRecall: x\nF1 Score: x ")
+    metadata_label = tk.Label(new_window, text=f"Tamaño del archivo: {file_size} bytes\nResolución: {resolution[0]} x {resolution[1]}\nFecha de creación: {creation_date}\n\n - Información detallada\nPrecisión: x\nPerdida: x\nEntropía: x")
     metadata_label.pack()
 
 #-------------------------
