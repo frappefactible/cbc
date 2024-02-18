@@ -57,7 +57,7 @@ def upload_predict():
             font_size = int(height / 20)  # Ajusta este valor según tus necesidades
 
             font = ImageFont.truetype("arial.ttf", font_size)  # Asegúrate de tener la fuente arial.ttf en tu directorio de trabajo
-            text = f"Clase: {predicted_class}, Confianza: {confidence_percent}%"
+            text = f"Clase: {predicted_class}, Precisión: {confidence_percent}%"
             draw.text((0, 0), text, (255, 255, 255), font=font)  # Cambia las coordenadas y el color según tus necesidades
 
 
