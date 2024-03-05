@@ -92,3 +92,5 @@ def upload_predict():
 if __name__ == '__main__':
     model = tf.keras.models.load_model('modelo2.h5')
     app.run(debug=True)
+    #app.run(debug=True, port=5007) para ejecutar en localhost 127.0.0.1:5007 con puerto 5007
+    #app.run(host='192.168.1.38', debug=True, port=5007) para ejecutar en la IP de la conexion wi-fi actual
