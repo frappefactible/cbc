@@ -1525,6 +1525,7 @@
 						<div class="mbr-section-btn mt-4">
               <body>
                   <h1>Clasificador de imágenes</h1>
+		  <h2 style="color:red;">Advertencia: Por la lógica y los fines de este proyecto, SOLO DEBEN USARSE IMÁGENES DE LESIONES DE PIEL HUMANA.</h2>
                   <form method="POST" enctype="multipart/form-data">
                       <div class="custom-file">
                           <input type="file" name="image" class="custom-file-input" id="customFile" style="display: none;" required>
@@ -1538,6 +1539,14 @@
                   {% if prediction is not none %}
                   <h2>Clase: {{ prediction }}</h2>
                   <h2>Precisión: {{ confidence }}%</h2>
+	          <h3>Lista de clases:</h3>
+                  <h3>0: Queratosis actínica y carcinoma intraepitelial (akiec)</h3>
+                  <h3>1: Carcinoma de células basales (bcc)</h3>
+                  <h3>2: Lesiones benignas similares a la queratosis (bkl)</h3>
+                  <h3>3: Dermatofibroma (df)</h3>
+                  <h3>4: Nevus melanocítico (nv)</h3>
+                  <h3>5: Granulomas piogénicos y hemorragia (vasc)</h3>
+                  <h3>6: Melanoma (mel)</h3>
                   {% endif %}
               </body>
             </div>
